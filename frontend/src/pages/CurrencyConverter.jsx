@@ -1,11 +1,24 @@
 import { useState } from 'react'
 import './CurrencyConverter.scss'
+import axios from 'axios'
 
 const CurrencyConverter = () => {
 
   const [amount, setAmount] = useState(0);
   const [fromCurrency, setFromCurrency] = useState('USD');
   const [toCurrency, setToCurrency] = useState('EUR');
+
+  const convertedCurrency = async () => {
+    try {
+      const response = await axios.get(`http://localhost:5000/api/exchange-rates/${fromCurrency}`);
+      const rate = response.data.rates[toCurrency];
+      const convertedAmount = amount * rate;
+      alert(`${amount} ${fromCurrency} is equal to ${convertedAmount} ${toCurrency}`);
+    } catch (error) {
+      console.error(error);
+    }
+    
+   }
 
   return (
     <div className="currency-converter">
@@ -33,7 +46,7 @@ const CurrencyConverter = () => {
           </select>
         </div>
       </div>
-      <button>Convert</button>
+      <button onClick={convertedCurrency}>Convert</button>
     </div>
   )
 }
