@@ -7,13 +7,14 @@ const CurrencyConverter = () => {
   const [amount, setAmount] = useState(0);
   const [fromCurrency, setFromCurrency] = useState('USD');
   const [toCurrency, setToCurrency] = useState('EUR');
+  const [convertedAmount, setConvertedAmount] = useState(null);
 
   const convertedCurrency = async () => {
     try {
       const response = await axios.get(`http://localhost:5000/api/exchange-rates/${fromCurrency}`);
       const rate = response.data.rates[toCurrency];
-      const convertedAmount = amount * rate;
-      alert(`${amount} ${fromCurrency} is equal to ${convertedAmount} ${toCurrency}`);
+      setConvertedAmount(amount * rate);
+      //console.log(`${amount} ${fromCurrency} is equal to ${convertedAmount} ${toCurrency}`);
     } catch (error) {
       console.error(error);
     }
@@ -47,8 +48,13 @@ const CurrencyConverter = () => {
         </div>
       </div>
       <button onClick={convertedCurrency}>Convert</button>
+      <div className='result'>
+        {convertedAmount >0 && <div>{amount} {fromCurrency} is equal to {convertedAmount} {toCurrency}</div>}
+      </div>
     </div>
   )
 }
 
 export default CurrencyConverter
+
+
