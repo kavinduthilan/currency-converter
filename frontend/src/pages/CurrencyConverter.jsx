@@ -27,7 +27,7 @@ const CurrencyConverter = () => {
       <div className="currency-converter-content">
         <div className='amount'>
           <p>Amount</p>
-          <input type="number" value={amount} onChange={(e)=>setAmount(e.target.value)} />
+          <input type="text" value={amount} onChange={(e)=>setAmount(e.target.value)} />
         </div>
         <div className='from'>
           <p>From</p>
